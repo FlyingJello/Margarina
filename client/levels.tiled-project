@@ -1,0 +1,12 @@
+{
+    "automappingRulesFile": "",
+    "commands": [
+    ],
+    "extensionsPath": "src/assets/terrain/extensions",
+    "folders": [
+        "src/assets/sprites/terrain",
+        "src/assets/tilesets",
+        "src/assets/levels"
+    ],
+    "objectTypesFile": ""
+}
