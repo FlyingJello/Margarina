@@ -36,12 +36,8 @@ namespace Margarina
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
+            //temporary
             var map = new Map { Id = "testmap", Level = _levelFactory.GetLevel("test_level") };
-            var doug = new Player("Doug") { SpriteId = "player", Position = new Point(16, 12), MapId = map.Id, Speed = 120 };
-            var eugenie = new Player("Eugenie") { SpriteId = "player", Position = new Point(16, 14), MapId = map.Id, Speed = 120 };
-
-            _state.Actors.Add(doug);
-            _state.Actors.Add(eugenie);
             _state.Maps.Add(map);
 
             var previousExecution = DateTimeOffset.Now;

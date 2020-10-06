@@ -9,7 +9,9 @@ using Margarina.Configuration;
 using Margarina.Models;
 using Margarina.Models.Actors;
 using Margarina.Models.World;
+using Margarina.Persistence;
 using Margarina.Utils;
+using Microsoft.Azure.Cosmos.Table;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
@@ -17,19 +19,41 @@ namespace Margarina.Services
 {
     public class PlayerService : IPlayerService
     {
+        private readonly CloudTableClient _tableClient;
         private readonly AuthenticationConfig _authConfig;
         private readonly WorldState _state;
 
-        public PlayerService(MargarinaContext context, IOptions<AuthenticationConfig> authConfig, WorldState state)
+        public PlayerService(IStorageTableFactory factory, IOptions<AuthenticationConfig> authConfig, WorldState state)
         {
-            _context = context;
+            _tableClient = factory.GetCloudTable();
             _authConfig = authConfig.Value;
             _state = state;
         }
 
-        public async Task<string> Authenticate(string username, string password)
+        public async Task<string> Create(string username, string password)
         {
-            var user = await _context.Users.SingleOrDefaultAsync(usr => usr.Username == username && usr.Password == password); // TODO : salt and pepper
+            if (password.Length < 8)
+            {
+                return "Your password suck"; 
+            }
+
+            var table = _tableClient.GetTableReference("Users");
+            var existingUser = table.CreateQuery<User>().Where(usr => usr.Username == username).ToList().SingleOrDefault();
+
+            if (existingUser != null)
+            {
+                return "Username already exist";
+            }
+
+            await table.ExecuteAsync(TableOperation.Insert(new User(username, password)));
+
+            return "created";
+        }
+
+        public string Authenticate(string username, string password)
+        {
+            var table = _tableClient.GetTableReference("Users");
+            var user = table.CreateQuery<User>().Where(usr => usr.Username == username && usr.Password == password).ToList().SingleOrDefault(); // TODO : salt and pepper
 
             return user == null ? string.Empty : GenerateToken(user);
         }

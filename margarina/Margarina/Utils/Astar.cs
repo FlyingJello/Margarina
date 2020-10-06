@@ -27,7 +27,7 @@ namespace Margarina.Utils
 
             openNodes.Add(start);
 
-            var goal = new Node { X = destination.X, Y = destination.Y };
+            var goal = new Node(destination.X, destination.Y);
             Node current = default;
 
             while (openNodes.Any() && !closedNodes.Contains(goal))
@@ -112,9 +112,7 @@ namespace Margarina.Utils
                 }
             }
 
-            public Node() : base(new Tile(0))
-            {
-            }
+            public Node(int x, int y) : base(0, x, y) { }
 
             public void RunHeuristic(Point goal)
             {

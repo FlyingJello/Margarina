@@ -4,9 +4,5 @@
     {
         public string Id { get; set; }
         public Level Level { get; set; }
-
-        public Map()
-        {
-        }
     }
 }

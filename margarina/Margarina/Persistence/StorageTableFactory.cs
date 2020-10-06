@@ -25,10 +25,6 @@ namespace Margarina.Persistence
             };
 
             return client;
-
-            //var tableReference = client.GetTableReference() ?? throw new NullReferenceException();
-            //tableReference.CreateIfNotExists();
-            //return tableReference;
         }
     }
 }

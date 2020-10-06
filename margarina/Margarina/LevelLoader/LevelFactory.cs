@@ -73,7 +73,7 @@ namespace Margarina.LevelLoader
                     var newOffsetX = x + offsetX;
                     var newOffsetY = y + offsetY;
 
-                    output[newOffsetX][newOffsetY] = new Tile(tile) { X = newOffsetX, Y = newOffsetY };
+                    output[newOffsetX][newOffsetY] = new Tile(tile, newOffsetX, newOffsetY);
 
                     x++;
 

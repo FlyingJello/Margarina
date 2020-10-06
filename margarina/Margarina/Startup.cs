@@ -4,12 +4,12 @@ using Margarina.Configuration;
 using Margarina.Hubs;
 using Margarina.LevelLoader;
 using Margarina.Models.World;
+using Margarina.Persistence;
 using Margarina.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SignalR;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -63,11 +63,14 @@ namespace Margarina
             });
 
             services.Configure<AuthenticationConfig>(Configuration.GetSection(AuthenticationConfig.SectionName));
+            services.Configure<StorageConfig>(Configuration.GetSection(StorageConfig.SectionName));
 
             services.AddHostedService<MainLoop>();
 
             services.AddSingleton<WorldState>();
             services.AddSingleton<ILevelFactory, LevelFactory>();
+
+            services.AddScoped<IStorageTableFactory, StorageTableFactory>();
 
             services.AddScoped<IActorService, ActorService>();
             services.AddScoped<IPlayerService, PlayerService>();

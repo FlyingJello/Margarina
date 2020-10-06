@@ -2,7 +2,7 @@
 
 namespace Margarina.Persistence
 {
-    interface IStorageTableFactory
+    public interface IStorageTableFactory
     {
         CloudTableClient GetCloudTable();
     }

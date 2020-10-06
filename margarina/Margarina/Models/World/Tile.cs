@@ -4,12 +4,14 @@
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int X { get; set; }
-        public int Y { get; set; }
+        public int X { get; }
+        public int Y { get; }
 
-        public Tile(int id)
+        public Tile(int id, int x, int y)
         {
             Id = id;
+            X = x;
+            Y = y;
         }
 
         public Tile(Tile tile)
