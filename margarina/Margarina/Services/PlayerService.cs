@@ -10,7 +10,6 @@ using Margarina.Models;
 using Margarina.Models.Actors;
 using Margarina.Models.World;
 using Margarina.Utils;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
@@ -18,7 +17,6 @@ namespace Margarina.Services
 {
     public class PlayerService : IPlayerService
     {
-        private readonly MargarinaContext _context;
         private readonly AuthenticationConfig _authConfig;
         private readonly WorldState _state;
 
