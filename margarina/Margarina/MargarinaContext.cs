@@ -10,6 +10,7 @@ namespace Margarina
 
         public MargarinaContext(DbContextOptions options) : base(options)
         {
+            Database.Migrate();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

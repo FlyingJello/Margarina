@@ -2,7 +2,7 @@ import * as SignalR from "@microsoft/signalr"
 
 export function StartSocket(token) {
   const connection = new SignalR.HubConnectionBuilder()
-    .withUrl(`${window.config.url}/game?access_token=${token}`)
+    .withUrl(`${window.config.Url}/game?access_token=${token}`)
     .configureLogging(SignalR.LogLevel.Information)
     .build();
 
@@ -10,7 +10,7 @@ export function StartSocket(token) {
 }
 
 export function Authenticate(username, password) {
-  return fetch(`${window.config.url}/user/authentication`, {
+  return fetch(`${window.config.Url}/user/authentication`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

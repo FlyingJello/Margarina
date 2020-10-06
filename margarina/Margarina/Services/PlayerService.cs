@@ -9,6 +9,7 @@ using Margarina.Configuration;
 using Margarina.Models;
 using Margarina.Models.Actors;
 using Margarina.Models.World;
+using Margarina.Utils;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -52,7 +53,16 @@ namespace Margarina.Services
 
         public void Login(string username)
         {
-            var player = (Player)_state.Actors.Single(act => act.Id == username);
+            var player = (Player)_state.Actors.SingleOrDefault(act => act.Id == username);
+
+            if (player == null)
+            {
+                // TODO : HANDLE FIRST LOGIN!!!!!!!!!!!!!
+                var mapId = "testmap";
+                player = new Player(username) { SpriteId = "player", Position = new Point(16, 12), MapId = mapId };
+                _state.Actors.Add(player);
+            }
+
             _state.ConnectedPlayers.Add(player);
         }
 

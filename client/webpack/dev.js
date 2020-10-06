@@ -41,6 +41,7 @@ module.exports = {
       patterns: [
         { from: './m3x6.ttf', to: '.' },
         { from: './m3x6l.ttf', to: '.' },
+        { from: './config.json', to: '.' },
       ],
     }),
   ]

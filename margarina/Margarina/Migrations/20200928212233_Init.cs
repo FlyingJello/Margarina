@@ -27,6 +27,26 @@ namespace Margarina.Migrations
                 table: "Users",
                 columns: new[] { "Username", "Password" },
                 values: new object[] { "Doug", "1234" });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Username", "Password" },
+                values: new object[] { "Bob", "1234" });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Username", "Password" },
+                values: new object[] { "Steve", "1234" });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Username", "Password" },
+                values: new object[] { "Raj", "1234" });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Username", "Password" },
+                values: new object[] { "Bouchard", "1234" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
