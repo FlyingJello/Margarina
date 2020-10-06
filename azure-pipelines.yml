@@ -1,53 +1,42 @@
-
 trigger:
 - master
 
 pool:
-  vmImage: 'windows-latest'
-
-variables:
-  solution: '**/*.sln'
-  buildPlatform: 'Any CPU'
-  buildConfiguration: 'Release'
+  vmImage: 'ubuntu-latest'
 
 steps:
-- task: NuGetToolInstaller@1
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: 'build'
+      projects: '**/*.csproj'
 
-- task: NuGetCommand@2
-  inputs:
-    restoreSolution: '$(solution)'
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: 'publish'
+      publishWebProjects: true
+      arguments: '-o $(Build.ArtifactStagingDirectory)'
+      zipAfterPublish: false
+      modifyOutputPath: false
 
-- task: VSBuild@1
-  inputs:
-    solution: '$(solution)'
-    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site"'
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+  - task: Npm@1
+    inputs:
+      command: 'install'
+      workingDir: 'client/'
 
-- task: VSTest@2
-  inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+  - task: Npm@1
+    inputs:
+      command: 'custom'
+      workingDir: 'client/'
+      customCommand: 'run build'
 
-- task: Npm@1
-  inputs:
-    command: 'install'
-    workingDir: 'client'
+  - task: CopyFiles@2
+    inputs:
+      SourceFolder: 'client/dist'
+      Contents: '**'
+      TargetFolder: '$(Build.ArtifactStagingDirectory)/wwwroot'
 
-- task: Npm@1
-  inputs:
-    command: 'custom'
-    workingDir: 'client'
-    customCommand: 'run build'
-
-- task: CopyFiles@2
-  inputs:
-    SourceFolder: 'client/dist'
-    Contents: '**'
-    TargetFolder: '$(Build.ArtifactStagingDirectory)/dist'
-
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'drop'
-    publishLocation: 'Container'
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      ArtifactName: 'drop'
+      publishLocation: 'Container'
