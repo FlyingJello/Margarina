@@ -31,8 +31,6 @@ namespace Margarina
             services.AddControllers();
             services.AddSignalR().AddNewtonsoftJsonProtocol();
 
-            services.AddDbContext<MargarinaContext>(options => options.UseSqlite("Data Source=margarina.db")); // TODO an actual database plz
-
             var secret = Configuration.GetSection(AuthenticationConfig.SectionName).Get<AuthenticationConfig>().Secret;
 
             services.AddSingleton<IUserIdProvider, UserIdProvider>();
