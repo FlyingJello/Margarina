@@ -82,7 +82,12 @@ namespace Margarina.Services
                 // TODO : HANDLE FIRST LOGIN!!!!!!!!!!!!!
                 var mapId = "testmap";
                 player = new Player(username) { SpriteId = "player", Position = new Point(16, 12), MapId = mapId };
+                player.ChatHistory.Add("Welcome to Margarina Quest!");
                 _state.Actors.Add(player);
+            }
+            else
+            {
+                player.Login();
             }
 
             _state.ConnectedPlayers.Add(player);

@@ -20,5 +20,10 @@ namespace Margarina.Models.Actors
         {
             return Name.GetHashCode();
         }
+
+        public void Login()
+        {
+            ChatHistory.Clear();
+        }
     }
 }
