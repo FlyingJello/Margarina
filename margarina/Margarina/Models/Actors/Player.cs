@@ -10,6 +10,7 @@ namespace Margarina.Models.Actors
 
         public Player(string name) : base(name)
         {
+            Type = "player";
             ChatHistory = new List<string>();
             Name = name;
             Speed = 120;

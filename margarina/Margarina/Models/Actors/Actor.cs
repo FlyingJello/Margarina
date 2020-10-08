@@ -6,6 +6,7 @@ namespace Margarina.Models.Actors
     public abstract class Actor
     {
         public string Id { get; }
+        public string Type { get; set; }
         public string SpriteId { get; set; }
         public Point Position { get; set; }
         public string MapId { get; set; }

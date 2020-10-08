@@ -39,8 +39,7 @@ module.exports = {
     }),
     new CopyPlugin({
       patterns: [
-        { from: './m3x6.ttf', to: '.' },
-        { from: './m3x6l.ttf', to: '.' },
+        { from: './src/assets/font/m3x6.ttf', to: '.' },
         { from: './config.json', to: '.' },
       ],
     }),

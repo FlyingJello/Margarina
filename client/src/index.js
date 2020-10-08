@@ -2,6 +2,7 @@ import Phaser from "phaser";
 
 import GameScene from "./scenes/game";
 import MenuScene from "./scenes/menu";
+import LoadingScene from "./scenes/loading";
 
 const config = {
   type: Phaser.AUTO,
@@ -13,7 +14,7 @@ const config = {
   dom: {
     createContainer: true
   },
-  scene: [MenuScene, GameScene]
+  scene: [MenuScene, GameScene, LoadingScene]
 };
 
 window.addEventListener('load', () => {

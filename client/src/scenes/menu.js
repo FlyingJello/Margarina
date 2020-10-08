@@ -4,21 +4,25 @@ import { Buttons, Label } from 'phaser3-rex-plugins/templates/ui/ui-components.j
 
 import { StartSocket, Authenticate } from '../utils/connection'
 
+import font from '../assets/font/font1.png';
+import fontData from '../assets/font/font1.xml';
+
 export default class MenuScene extends Scene {
   constructor() {
     super({ key: 'MenuScene' })
   }
 
   preload() {
+    this.load.bitmapFont('font', font, fontData);
   }
 
   create() {
     const center = this.game.canvas.width / 2
 
-    this.add.text(center, 76, "Margarina Quest", { fontFamily: 'm3x6', fontSize: 54, align: "center" }).setOrigin(0.5, 0.5).setResolution(10);
+    this.add.bitmapText(center, 76, 'font', "Margarina Quest", 48).setOrigin(0.5, 0.5)
 
-    this.usernameInput = new InputText(this, center, 180, 140, 26, { placeholder: "Username", color: '#ffffff', backgroundColor: 'grey', fontFamily: 'm3x6', fontSize: "24px", align: "center" })
-    this.passwordInput = new InputText(this, center, 210, 140, 26, { placeholder: "password", color: '#ffffff', backgroundColor: 'grey', fontFamily: 'm3x6', fontSize: "24px", align: "center" })
+    this.usernameInput = new InputText(this, center, 180, 140, 26, { placeholder: "Username", color: '#ffffff', backgroundColor: 'grey', fontFamily: 'm3x6', fontSize: "32px", align: "center" })
+    this.passwordInput = new InputText(this, center, 210, 140, 26, { placeholder: "password", color: '#ffffff', backgroundColor: 'grey', fontFamily: 'm3x6', fontSize: "32px", align: "center" })
 
     this.usernameInput.node.maxLength = 16;
     this.usernameInput.node.autocomplete = "off"
@@ -36,11 +40,7 @@ export default class MenuScene extends Scene {
       height: 26,
       align: 'center',
       background: buttonShape,
-      text: this.add.text(0, 0, "Login", {
-        fontSize: 24,
-        fontFamily: 'm3x6',
-        align: 'center',
-      }).setResolution(3)
+      text: this.add.bitmapText(0, 0, 'font', "Login", 16)
     });
 
     var buttons = new Buttons(this, {
@@ -59,7 +59,7 @@ export default class MenuScene extends Scene {
 
     this.usernameInput.node.focus()
     this.passwordInput.node.onkeypress = event => {
-      if (event.code === "Enter") { 
+      if (event.code === "Enter") {
         this.login()
       }
     }
@@ -68,13 +68,23 @@ export default class MenuScene extends Scene {
   update() { }
 
   login() {
-    Authenticate(this.usernameInput.text, this.passwordInput.text)
+    this.scene.stop('MenuScene')
+    this.scene.start('LoadingScene')
+
+    var username = this.usernameInput.text
+    var passsword = this.passwordInput.text
+
+    Authenticate(username, passsword)
       .then(response => StartSocket(response.token))
       .then(connection => {
-        this.scene.start('GameScene', { connection: connection, username: this.usernameInput.text })
-        this.scene.stop('MenuScene')
+        this.scene.start('GameScene', { connection: connection, username: username })
+        this.scene.stop('LoadingScene')
       })
-      .catch(console.error)
+      .catch(error => {
+        this.scene.start('MenuScene')
+        this.scene.stop('LoadingScene')
+        console.error(error)
+      })
   }
 
 }

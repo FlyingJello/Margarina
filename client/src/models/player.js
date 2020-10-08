@@ -6,7 +6,7 @@ export default class Player extends Actor {
 
     this.name = name
 
-    let nametag = game.add.text(8, -10, name, { fontFamily: 'm3x6l' }).setOrigin(0.5, 0.5);
+    let nametag = game.add.bitmapText(8, -10, 'font', name, 8).setOrigin(0.5, 0.5);
     nametag.setDepth(99)
     this.group.add(nametag);
   }

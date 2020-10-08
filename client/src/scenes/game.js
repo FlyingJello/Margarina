@@ -89,8 +89,9 @@ export default class GameScene extends Scene {
       this.actors = this.actors.filter(actor => !actorsToRemove.find(act => act.id === actor.id))
       actorsToRemove.forEach(actor => actor.destroy())
 
-      let newActors = state.actors.filter(actor => !this.actors.find(act => act.id === actor.id)).map(actor => new Actor(this, actor.id, 'player', actor.position))
-      this.actors = this.actors.concat(newActors)
+      let newActors = state.actors.filter(actor => !this.actors.find(act => act.id === actor.id));
+      let newPlayers = newActors.filter(actor => actor.type === "player").map(actor => new Player(this, actor.id, actor.position))
+      this.actors = this.actors.concat(newPlayers)
 
       this.actors.forEach(actor => actor.update(state.actors.find(act => act.id === actor.id)))
 
@@ -104,7 +105,7 @@ export default class GameScene extends Scene {
     let chatBox = this.add.container(0, this.game.canvas.height - 120)
     chatBox.setScrollFactor(0, 0);
 
-    let chatInput = new InputText(this, 0, 104, 240, 16, { color: '#ffffff', backgroundColor: 'grey', fontFamily: 'm3x6l', fontSize: "16px" }).setOrigin(0, 0)
+    let chatInput = new InputText(this, 0, 104, 240, 16, { color: '#ffffff', backgroundColor: 'grey', fontFamily: 'm3x6', fontSize: "16px" }).setOrigin(0, 0)
     chatInput.node.autocomplete = "off"
     this.add.existing(chatInput);
     chatBox.add(chatInput)

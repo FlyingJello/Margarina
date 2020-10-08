@@ -25,7 +25,7 @@ export default class Actor {
     let group = this.group
     let action = this.currentAction
 
-    if (action == null || action.type === 0) {
+    if (action === null || action.type === 0) {
       group.body.setVelocityX(0);
       group.body.setVelocityY(0);
       this.sprite.play('idle', true);
