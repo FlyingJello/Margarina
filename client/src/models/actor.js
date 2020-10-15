@@ -46,9 +46,9 @@ export default class Actor {
       this.group.setPosition(map.tileToWorldX(action.position.x), map.tileToWorldY(action.position.y))
 
       //interpolation stuff
-      let speed = this.speed * 0.02 * 16
-      speed = speed - speed * 0.25
-      this.game.physics.moveTo(group, map.tileToWorldX(action.nextStep.x), map.tileToWorldY(action.nextStep.y), speed)
+      // let speed = this.speed * 0.02 * 16
+      // speed = speed - speed * 0.25
+      // this.game.physics.moveTo(group, map.tileToWorldX(action.nextStep.x), map.tileToWorldY(action.nextStep.y), speed)
     }
   }
 
